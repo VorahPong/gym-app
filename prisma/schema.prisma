@@ -12,5 +12,35 @@ model User {
   id        Int      @id @default(autoincrement())
   email     String   @unique
   password  String
+  role      Role
+  student   Student?
+  faculty   Faculty?
   createdAt DateTime @default(now())
+}
+
+model Student {
+  userId     Int    @id
+  schoolId   String @unique
+  user       User   @relation(fields: [userId], references: [id])
+  scanLogs   ScanLog[]
+}
+
+
+model Faculty {
+  userId Int  @id
+  user   User @relation(fields: [userId], references: [id])
+  // add more if needed (e.g., shift schedule, title, etc.)
+}
+
+model ScanLog {
+  id        Int      @id @default(autoincrement())
+  student   Student  @relation(fields: [studentId], references: [userId])
+  studentId Int
+  timestamp DateTime @default(now())
+}
+
+enum Role {
+  ADMIN
+  FACULTY
+  STUDENT
 }
