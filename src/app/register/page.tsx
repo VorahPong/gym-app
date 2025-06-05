@@ -2,11 +2,15 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
 
 export default function RegisterPage() {
+  const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
+  const [schoolId, setSchoolId] = useState('');
   const [message, setMessage] = useState('');
 
   const handleRegister = async (e: React.FormEvent) => {
@@ -15,7 +19,12 @@ export default function RegisterPage() {
     const res = await fetch('/api/register', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ 
+        email, 
+        password, 
+        role,
+        ...(role === 'STUDENT' && { schoolId })
+      }),
     });
 
     const data = await res.json();
@@ -23,7 +32,7 @@ export default function RegisterPage() {
   };
 
   return (
-    <div className="min-h-screen flex justify-center items-center bg-[#FEC52E]">
+    <div className="min-h-screen text-black flex justify-center items-center bg-[#FEC52E]">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-sm">
         <h2 className="text-2xl font-bold mb-4 text-center">Register</h2>
         <form onSubmit={handleRegister} className="space-y-4">
@@ -43,6 +52,29 @@ export default function RegisterPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
+          <select
+            name="role"
+            id="role"
+            onChange={(e) => setRole(e.target.value.toUpperCase())} // Prisma expects uppercase roles
+            className="w-full px-3 py-2 border border-gray-300 rounded focus:outline-none"
+          >
+            <option value="">Select Role</option>
+            <option value="ADMIN">Admin</option>
+            <option value="FACULTY">Faculty</option>
+            <option value="STUDENT">Student</option>
+          </select>
+
+          {role === 'STUDENT' && (
+            <input
+              type="text"
+              placeholder="School ID"
+              required
+              className="w-full px-3 py-2 border border-gray-300 rounded text-black focus:outline-none"
+              value={schoolId}
+              onChange={(e) => setSchoolId(e.target.value)}
+            />
+          )}
+
           <div className="flex flex-col items-center">
             <button
               type="submit"
