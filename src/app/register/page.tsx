@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 
 export default function RegisterPage() {
@@ -29,6 +29,9 @@ export default function RegisterPage() {
 
     const data = await res.json();
     setMessage(data.message || data.error);
+    if (res.status === 201) {
+      router.push('/login');
+    }
   };
 
   return (
