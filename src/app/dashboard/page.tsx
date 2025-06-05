@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
+import Image from "next/image";
 
 export default async function DashboardPage() {
     const cookieStore = cookies();
@@ -11,7 +12,19 @@ export default async function DashboardPage() {
 
     return (
         <div className="min-h-screen bg-white text-black">
-            hello
+            <div className="flex">
+
+                <div className="w-fit text-center p-10">
+                    <Image className="mb-2" src="/qr-icon.png" alt="QR" width={70} height={70} />
+                    <label htmlFor="">Scan ID</label>
+                </div>
+
+                <div className="w-fit text-center p-10">
+                    <Image className="mb-2" src="/qr-icon.png" alt="QR" width={70} height={70} />
+                    <label htmlFor="">Scan ID</label>
+                </div>
+
+            </div>
         </div>
     );
 }
