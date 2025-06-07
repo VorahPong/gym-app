@@ -14,9 +14,19 @@ export default function ScanID({ studentId }: { studentId: string }) {
       </button>
 
       {showQR && (
-        <div className="mt-4">
-          <QRCode value={studentId} size={128} />
-          <p className="text-sm mt-2">{studentId}</p>
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+            <div className="bg-white w-96 h-96 rounded-lg shadow-lg flex flex-col p-5">
+                <button
+                    onClick={() => setShowQR(false)}
+                    className="text-black text-xl font-bold text-right"
+                >
+                    ×
+                </button>
+                <div className='flex flex-col justify-center items-center gap-5'>
+                    <QRCode value={studentId} size={200}/>
+                    <p className="text-sm mt-2">{studentId}</p>
+                </div>
+            </div>
         </div>
       )}
     </div>
