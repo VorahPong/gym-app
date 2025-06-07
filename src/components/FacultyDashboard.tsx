@@ -1,6 +1,5 @@
-// components/dashboards/FacultyDashboard.tsx
 'use client';
-import QRScanner from "./QRScanner"; // Assume you're using html5-qrcode or similar
+import QRScanner from "./QRScanner";
 
 export default function FacultyDashboard() {
   return (
