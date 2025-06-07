@@ -9,7 +9,7 @@ export default function Navbar() {
   const [isSidebarOpen, setSidebarOpen] = useState(false);
 
   return (
-    <nav className="bg-[#FEC52E] text-white p-4 flex justify-between items-center">
+    <nav className="bg-[#FEC52E] text-white p-2 flex justify-between items-center">
       <Image src="/cameronLogo.png" alt="Cameron Logo" width={50} height={50} />
       <div className="space-x-4 cursor-pointer" onClick={() => setSidebarOpen(!isSidebarOpen)}>
         <Image src="/menu-icon.png" alt="Cameron Logo" width={40} height={40} />
