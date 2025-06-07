@@ -1,8 +1,9 @@
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
-import Image from "next/image";
 import { prisma } from "@/lib/prisma";
-import ScanID from "@/components/ScanID";
+import AdminDashboard from "@/components/AdminDashboard";
+import StudentDashboard from "@/components/StudentDashboard";
+import FacultyDashboard from "@/components/FacultyDashboard";
 
 
 export default async function DashboardPage() {
@@ -13,27 +14,27 @@ export default async function DashboardPage() {
         redirect('/login');
     }
 
-    // fetch student id
+    // fetch user role
     const user = await prisma.user.findUnique({
         where: { email: userEmail.value},
-        include: { student: true },
+        include: { 
+            student: true, 
+            faculty: true, 
+        },
     });
 
-    if (!user || user.role !== "STUDENT" || !user.student) {
+    if (!user) {
         redirect("/login");
     }
 
-    const studentId = user.student.schoolId;
-
-    return (
-        <div className="min-h-screen bg-white text-black">
-            <div className="flex">
-
-                {/* features */}
-                <ScanID studentId={user.student.schoolId} />
-
-
-            </div>
-        </div>
-    );
+    switch (user.role) {
+        case 'STUDENT':
+        //   return <StudentDashboard studentId={user.student?.schoolId ?? ''} />;
+        case 'FACULTY':
+        //   return <FacultyDashboard />;
+        case 'ADMIN':
+        //   return <AdminDashboard />;
+        default:
+          return <p>Unknown role</p>;
+      }
 }
