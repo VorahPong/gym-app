@@ -29,9 +29,9 @@ export default async function DashboardPage() {
 
     switch (user.role) {
         case 'STUDENT':
-        //   return <StudentDashboard studentId={user.student?.schoolId ?? ''} />;
+          return <StudentDashboard studentId={user.student?.schoolId ?? ''} />;
         case 'FACULTY':
-        //   return <FacultyDashboard />;
+          return <FacultyDashboard />;
         case 'ADMIN':
         //   return <AdminDashboard />;
         default:
